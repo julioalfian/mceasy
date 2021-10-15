@@ -6,12 +6,12 @@
 </template>
 
 <script>
-// @ is an alias to /src
+
 import Nav from "@/components/Navigation.vue";
 import Customers from "@/components/Customers.vue";
 
 export default {
-  name: "Home",
+  name: "Customers",
   components: {
     Nav,
     Customers

@@ -1,20 +1,20 @@
 <template>
   <div class="home_page flex">
     <Nav/>
-    <Customers/>
+    <AddCustomer/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+
 import Nav from "@/components/Navigation.vue";
-import Customers from "@/components/Customers.vue";
+import AddCustomer from "@/components/AddCustomer.vue";
 
 export default {
-  name: "Home",
+  name: "AddCustomers",
   components: {
     Nav,
-    Customers
+    AddCustomer
   },
   
 };
