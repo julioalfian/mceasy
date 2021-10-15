@@ -37,7 +37,7 @@
 								<label for="" class="uppercase">Full name</label>
 								<p class="required">*required</p>
 							</div>
-							<input type="text" placeholder="Enter full name">
+							<input type="text" placeholder="Enter full name" v-model="newCustomer.name">
 						</div>
 						<div class="form-group fit-content">
 							<div class="flex justify-between items-center">
@@ -45,9 +45,9 @@
 								<p class="required">*required</p>
 							</div>
 							<div class="flex">
-								<input type="radio" name="gender" id="male">
+								<input type="radio" name="gender" id="male" value="male" v-model="newCustomer.gender">
 								<label for="male" class="label_radio ml-2 mr-6">Male</label>
-								<input type="radio" name="gender" id="female">
+								<input type="radio" name="gender" id="female" value="female" v-model="newCustomer.gender">
 								<label for="female" class="label_radio ml-2">Female</label>
 							</div>
 						</div>
@@ -56,15 +56,15 @@
 								<label for="" class="uppercase">Date of birth</label>
 								<p class="required">*required</p>
 							</div>
-							<input type="date" placeholder="dd/mm/yy">
+							<input type="date" placeholder="dd/mm/yy" v-model="newCustomer.birthday">
 						</div>
 						<div class="form-group">
 							<div class="flex justify-between items-center">
-								<label for="" class="uppercase">Identity Number</label>
+								<label for="" class="uppercase">Identity Type</label>
 								<p class="required">*required</p>
 							</div>
-							<select name="identity" id="identity" placeholder="KTP/SIM/Other">
-								<option value="ktp">KTP</option>
+							<select name="identity" id="identity" placeholder="KTP/SIM/Other" v-model="newCustomer.idType">
+								<option value="ktp" selected>KTP</option>
 								<option value="sim">SIM</option>
 								<option value="stnk">STNK</option>
 							</select>
@@ -74,14 +74,14 @@
 								<label for="" class="uppercase">Identity Number</label>
 								<p class="required">*required</p>
 							</div>
-							<input type="number" placeholder="Enter identity number">
+							<input type="number" placeholder="Enter identity number" v-model="newCustomer.idNumber">
 						</div>
 						<div class="form-group">
 							<div class="flex justify-between items-center">
 								<label for="" class="uppercase">Email</label>
 								<p class="required">*required</p>
 							</div>
-							<input type="email" placeholder="Enter email">
+							<input type="email" placeholder="Enter email" v-model="newCustomer.email">
 						</div>
 						<div class="form-group">
 							<div class="flex justify-between items-center">
@@ -89,12 +89,12 @@
 								<p class="required">*required</p>
 							</div>
 							<div class="phone flex">
-								<select name="phone_code" id="phone_code">
-									<option value="62">+62</option>
+								<select name="phone_code" id="phone_code" placeholder="+62" v-model="newCustomer.phoneCode">
+									<option value="62" selected>+62</option>
 									<option value="61">+61</option>
 									<option value="60">+60</option>
 								</select>
-								<input type="number" placeholder="Enter phone number">
+								<input type="number" placeholder="Enter phone number" v-model="newCustomer.phone">
 							</div>
 						</div>
 
@@ -105,23 +105,23 @@
 								<label for="" class="uppercase">Address</label>
 								<p class="required">*required</p>
 							</div>
-							<textarea name="address" id="address" cols="30" rows="3" placeholder="enter address"></textarea>
+							<textarea name="address" id="address" cols="30" rows="3" placeholder="enter address" v-model="newCustomer.address"></textarea>
 						</div>
 						<div class="form-group">
 							<div class="flex justify-between items-center">
 								<label for="" class="uppercase">Detail Address</label>
 								<p class="required">*required</p>
 							</div>
-							<textarea name="address" id="address" cols="30" rows="2" placeholder="enter details address: (Stret, block, number, etc)"></textarea>
+							<textarea name="address" id="address" cols="30" rows="2" placeholder="enter details address: (Stret, block, number, etc)" v-model="newCustomer.detailAddress"></textarea>
 						</div>
 						<div class="form-group">
 							<div class="flex justify-between items-center">
 								<label for="" class="uppercase">instagram</label>
 								
 							</div>
-							<input type="text" placeholder="Enter instagram">
+							<input type="text" placeholder="Enter instagram" v-model="newCustomer.ig">
 						</div>
-						<button class="btn btn-full-red float-right">Add Customer</button>
+						<button class="btn btn-full-red float-right" @click.prevent="handleAdd">Add Customer</button>
 					</div>
 				</div>
 			</form>
@@ -139,7 +139,30 @@ export default {
 	},
 	data() {
 		return {
-			
+			newCustomer: {
+				name: '',
+				gender: '',
+				birthday: '',
+				idType: '',
+				idNumber: '',
+				email: '',
+				phone: '',
+				phoneCode: '',
+				address: '',
+				detailAddress: '',
+				ig: ''
+			}
+		}
+	},
+	methods: {
+		handleAdd(){
+			if(this.newCustomer.name && this.newCustomer.gender && this.newCustomer.birthday && this.newCustomer.idType && this.newCustomer.idNumber && this.newCustomer.email && this.newCustomer.phone && this.newCustomer.address && this.newCustomer.detailAddress ){
+				alert('Add new customer success')
+				this.$router.push("/customers")
+			}else{
+				alert("form is required, Please fied the form")
+				console.log(this.newCustomer)
+			}
 		}
 	}
 }
