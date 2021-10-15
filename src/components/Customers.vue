@@ -5,7 +5,7 @@
 			<div class="customers_head flex justify-between items-center px-4 py-5 border-b flex-wrap">
 				<h4>Cutomers List</h4>
 				<div class="from-group flex flex-end">
-					<input type="text" placeholder="Search customers" class="search_input">
+					<input type="text" placeholder="Search customers" class="search_input" v-model="findSearch">
 					<div class="btn_search">
 						<Search/>
 					</div>
@@ -16,8 +16,8 @@
 					<div class="customer_filter flex items-center flex-wrap">
 						<div class="form-group">
 							<label for="gender" class="mr-2">Gender</label>
-							<select name="gender" id="gender">
-								<option value="all">All Gender</option>
+							<select name="gender" id="gender" v-model="findGender">
+								<option value="">All Gender</option>
 								<option value="female">Female</option>
 								<option value="male">Male</option>
 							</select>
@@ -25,7 +25,7 @@
 						</div>
 						<div class="form-group flex items-center lg:ml-6 ml-0 mt-2 lg:mt-0 ">
 							<label for="address" class="mr-2">Address</label>
-							<input type="text" class="address_input" id="address" placeholder="All country, provice, city, region, postal code">
+							<input type="text" class="address_input" id="address" placeholder="All country, provice, city, region, postal code" v-model="findAddress">
 							<ArrowDown/>
 						</div>
 					</div>
@@ -52,7 +52,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="border-b" v-for="item in customer" :key="item.id">
+							<tr class="border-b" v-for="item in handleFilter" :key="item.id">
 								<td class="text-center">
 									<input type="checkbox" class="select_item">
 								</td>
@@ -120,11 +120,14 @@ export default {
 	},
 	data() {
 		return {
+			findSearch: '',
+			findGender: '',
+			findAddress: '',
 			customer: [
 				{
 					select: false,
 					id: '00001',
-					nama: 'Nabile Aqmarina',
+					name: 'Nabile Aqmarina',
 					gender: 'Female',
 					address: 'Taman Sidoarjo No 5, Sidoarjo, Jawa Timur, Indonesia',
 					phone: '+628512345678'
@@ -132,7 +135,7 @@ export default {
 				{
 					select: false,
 					id: '00002',
-					name: 'Nabile Aqmarina',
+					name: 'Nabile Qomaria',
 					gender: 'Female',
 					address: 'Taman Sidoarjo No 5, Sidoarjo, Jawa Timur, Indonesia',
 					phone: '+628512345678'
@@ -140,7 +143,7 @@ export default {
 				{
 					select: false,
 					id: '00003',
-					name: 'Nabile Aqmarina',
+					name: 'Naswa Shihap',
 					gender: 'Female',
 					address: 'Taman Sidoarjo No 5, Sidoarjo, Jawa Timur, Indonesia',
 					phone: '+628512345678'
@@ -148,7 +151,7 @@ export default {
 				{
 					select: false,
 					id: '00004',
-					name: 'Nabile Aqmarina',
+					name: 'Laila Nur',
 					gender: 'Female',
 					address: 'Taman Sidoarjo No 5, Sidoarjo, Jawa Timur, Indonesia',
 					phone: '+628512345678'
@@ -156,7 +159,7 @@ export default {
 				{
 					select: false,
 					id: '00005',
-					name: 'Nabile Aqmarina',
+					name: 'Amalia Putri',
 					gender: 'Female',
 					address: 'Taman Sidoarjo No 5, Sidoarjo, Jawa Timur, Indonesia',
 					phone: '+628512345678'
@@ -164,7 +167,7 @@ export default {
 				{
 					select: false,
 					id: '00006',
-					name: 'Nabile Aqmarina',
+					name: 'Nabila Shaqib',
 					gender: 'Female',
 					address: 'Taman Sidoarjo No 5, Sidoarjo, Jawa Timur, Indonesia',
 					phone: '+628512345678'
@@ -172,7 +175,7 @@ export default {
 				{
 					select: false,
 					id: '00007',
-					name: 'Nabile Aqmarina',
+					name: 'Aqmarina',
 					gender: 'Female',
 					address: 'Taman Sidoarjo No 5, Sidoarjo, Jawa Timur, Indonesia',
 					phone: '+628512345678'
@@ -180,28 +183,47 @@ export default {
 				{
 					select: false,
 					id: '00008',
-					name: 'Nabile Aqmarina',
-					gender: 'Female',
+					name: 'Abdul Rahman',
+					gender: 'Male',
 					address: 'Taman Sidoarjo No 5, Sidoarjo, Jawa Timur, Indonesia',
 					phone: '+628512345678'
 				},
 				{
 					select: false,
 					id: '00009',
-					name: 'Nabile Aqmarina',
-					gender: 'Female',
-					address: 'Taman Sidoarjo No 5, Sidoarjo, Jawa Timur, Indonesia',
+					name: 'Fatih',
+					gender: 'Male',
+					address: 'Taman Sidoarjo No 5, Surabaya, Jawa Timur, Indonesia',
 					phone: '+628512345678'
 				},
 				{
 					select: false,
 					id: '00010',
-					name: 'Nabile Aqmarina',
-					gender: 'Female',
-					address: 'Taman Sidoarjo No 5, Sidoarjo, Jawa Timur, Indonesia',
+					name: 'Fajar Abdusalam',
+					gender: 'Male',
+					address: 'Taman Sidoarjo No 5, Lamongan, Jawa Timur, Indonesia',
 					phone: '+628512345678'
 				},
 			]
+		}
+	},
+	computed:{
+		handleFilter(){
+			if(this.findSearch){
+      	return this.customer.filter((item)=>{
+        return this.findSearch.toLowerCase().split(' ').every(v => item.name.toLowerCase().includes(v))
+      })
+      }else if(this.findGender){
+      	return this.customer.filter((item)=>{
+        return this.findGender.toLowerCase().split(' ').every(v => item.gender.toLowerCase().includes(v))
+      })
+      }else if(this.findAddress){
+      	return this.customer.filter((item)=>{
+        return this.findAddress.toLowerCase().split(' ').every(v => item.address.toLowerCase().includes(v))
+      })
+      }else{
+        return this.customer;
+      }
 		}
 	}
 }
@@ -297,6 +319,12 @@ table{
 		}
 	}
 	tbody{
+		tr{
+			transition: .3s;
+			&:hover{
+				background: #eeeeee;
+			}
+		}
 		td{
 			padding-top: 12px;
 			padding-bottom: 16px;
